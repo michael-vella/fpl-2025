@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fpl"
+version = "0.1.0"
+requires-python = ">= 3.12"
+description = "FPL 2025 Analyser"
+authors = [{ name = "Michael Vella", email = "michael.vella0110@gmail.com" }]
+dependencies = [
+    "requests==2.32.4"
+]
