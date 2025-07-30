@@ -19,6 +19,7 @@ def load_tests(test_type: str = "all"):
 
     return suite
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run unittest tests")
     parser.add_argument(
