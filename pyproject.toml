@@ -9,5 +9,6 @@ requires-python = ">= 3.12"
 description = "FPL 2025 Analyser"
 authors = [{ name = "Michael Vella", email = "michael.vella0110@gmail.com" }]
 dependencies = [
-    "requests==2.32.4"
+    "requests==2.32.4",
+    "pydantic==2.11.7",
 ]
