@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime, timezone
 
 from fpl.services.data_parser import DataParser
 from fpl.schemas import (
@@ -44,12 +45,96 @@ class TestDataParser(unittest.TestCase):
                 }
             ]
         }
-            
-            
 
         results = DataParser.extract_players(sample_json)
         
         self.assertEqual(len(results), 2)
         self.assertEqual(results[0].first_name, "Test One")
         self.assertIsInstance(results[0], PlayerResponse)
+        self.assertFalse(hasattr(results[0], "extra_args"))
+    
+    def test_extract_teams(self):
+        sample_json = {
+            "teams": [
+                {
+                    "id": 1,
+                    "code": 1,
+                    "name": "Team One",
+                    "short_name": "One",
+                    "strength_overall_home": 1,
+                    "strength_overall_away": 1,
+                    "strength_attack_home": 1,
+                    "strength_attack_away": 1,
+                    "strength_defence_home": 1,
+                    "strength_defence_away": 1,
+                    "extra_args": 1,
+                }
+            ]
+        }
+
+        results = DataParser.extract_teams(sample_json)
+        
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].id, 1)
+        self.assertIsInstance(results[0], TeamResponse)
+        self.assertFalse(hasattr(results[0], "extra_args"))
+
+    def test_extract_player_types(self):
+        sample_json = {
+            "element_types": [
+                {
+                    "id": 1,
+                    "singular_name_short": "DEF",
+                    "squad_select": 15,
+                    "extra_args": 1,
+                }
+            ]
+        }
+
+        results = DataParser.extract_player_types(sample_json)
+        
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].id, 1)
+        self.assertIsInstance(results[0], PlayerTypeResponse)
+        self.assertFalse(hasattr(results[0], "extra_args"))
+
+    def test_extract_gameweeks(self):
+        deadline_time = datetime(2025, 1, 1, tzinfo=timezone.utc)
+
+        sample_json = {
+            "events": [
+                {
+                    "id": 1,
+                    "name": "GW1",
+                    "deadline_time": deadline_time,
+                    "extra_args": 1,
+                }
+            ]
+        }
+
+        results = DataParser.extract_gameweeks(sample_json)
+        
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].deadline_time, deadline_time)
+        self.assertIsInstance(results[0], GameWeekResponse)
+        self.assertFalse(hasattr(results[0], "extra_args"))
+
+    def test_extract_fixtures(self):
+        sample_json = [
+            {
+                "id": 1,
+                "code": 1,
+                "event": 1,
+                "kickoff_time": datetime(2025, 1, 1, tzinfo=timezone.utc),
+                "team_a": 1,
+                "team_h": 1,
+                "extra_args": 1,
+            }
+        ]
+
+        results = DataParser.extract_fixtures(sample_json)
+        
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].id, 1)
+        self.assertIsInstance(results[0], FixtureResponse)
         self.assertFalse(hasattr(results[0], "extra_args"))
