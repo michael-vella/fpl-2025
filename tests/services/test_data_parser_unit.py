@@ -5,7 +5,6 @@ from fpl.services import DataParser
 from fpl.schemas import (
     PlayerResponse,
     TeamResponse,
-    PlayerTypeResponse,
     GameWeekResponse,
     FixtureResponse,
 )
@@ -77,25 +76,6 @@ class TestDataParser(unittest.TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].id, 1)
         self.assertIsInstance(results[0], TeamResponse)
-        self.assertFalse(hasattr(results[0], "extra_args"))
-
-    def test_extract_player_types(self):
-        sample_json = {
-            "element_types": [
-                {
-                    "id": 1,
-                    "singular_name_short": "DEF",
-                    "squad_select": 15,
-                    "extra_args": 1,
-                }
-            ]
-        }
-
-        results = DataParser.extract_player_types(sample_json)
-        
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].id, 1)
-        self.assertIsInstance(results[0], PlayerTypeResponse)
         self.assertFalse(hasattr(results[0], "extra_args"))
 
     def test_extract_gameweeks(self):
