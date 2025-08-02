@@ -1,36 +1,12 @@
-from api.client import APIClient
-from services.data_parser import DataParser
+from fpl.repositories import PlayerTypeRepository
+from fpl.services import PlayerTypeService
 
 if __name__ == "__main__":
+    player_type_repo = PlayerTypeRepository()
+    player_type_service = PlayerTypeService(player_type_repo)
 
-    # start: to use repository pattern
-    client = APIClient()
-    bootstrap_data = client.get_data("bootstrap-static/")
-    fixture_data = client.get_data("fixtures/")
+    player_types = player_type_repo.get_all()
+    print(f"Player Types: {player_types}")
 
-    player_list = DataParser.extract_players(bootstrap_data)
-    team_list = DataParser.extract_teams(bootstrap_data)
-    player_type_list = DataParser.extract_player_types(bootstrap_data)
-    gameweek_list = DataParser.extract_gameweeks(bootstrap_data)
-    fixture_list = DataParser.extract_fixtures(fixture_data)
-    # end to use repository pattern later
-
-    print("\nPlayer List:")
-    print(player_list[0])
-    print(len(player_list))
-
-    print("\nTeam List:")
-    print(team_list[0])
-    print(len(team_list))
-
-    print("\nPlayer Type List:")
-    print(player_type_list[0])
-    print(len(player_type_list))
-
-    print("\nGameweek List:")
-    print(gameweek_list[0])
-    print(len(gameweek_list))
-
-    print("\nFixture List:")
-    print(fixture_list[0])
-    print(len(fixture_list))
+    def_id = player_type_service.get_id_by_name("def")
+    print(f"Defender ID: {def_id}")
