@@ -1,7 +1,6 @@
 from fpl.schemas import (
     PlayerResponse,
     TeamResponse,
-    PlayerTypeResponse,
     GameWeekResponse,
     FixtureResponse,
 )
@@ -14,6 +13,5 @@ class DataParser:
 
     extract_players = staticmethod(lambda d: DataParser._extract(d, "elements", PlayerResponse))
     extract_teams = staticmethod(lambda d: DataParser._extract(d, "teams", TeamResponse))
-    extract_player_types = staticmethod(lambda d: DataParser._extract(d, "element_types", PlayerTypeResponse))
     extract_gameweeks = staticmethod(lambda d: DataParser._extract(d, "events", GameWeekResponse))
     extract_fixtures = staticmethod(lambda d: [FixtureResponse(**f) for f in d])  # list, not dict
