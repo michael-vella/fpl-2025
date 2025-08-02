@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 
-from fpl.repositories.player_type_repository import PlayerTypeRepository
+from fpl.repositories import PlayerTypeRepository
 from fpl.schemas import PlayerTypeResponse
 
 

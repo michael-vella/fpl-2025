@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class GameWeekResponse(BaseModel):
+class GameweekResponse(BaseModel):
     id: int
     name: str
     deadline_time: datetime

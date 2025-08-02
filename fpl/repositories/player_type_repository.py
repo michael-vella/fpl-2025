@@ -14,4 +14,4 @@ class PlayerTypeRepository:
         if not player_types:
             raise ValueError("No player types found in API response.")
         
-        return [PlayerTypeResponse(**item) for item in player_types]
+        return [PlayerTypeResponse(**pt) for pt in player_types]
