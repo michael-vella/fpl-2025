@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime, timezone
 
-from fpl.services.data_parser import DataParser
+from fpl.services import DataParser
 from fpl.schemas import (
     PlayerResponse,
     TeamResponse,
