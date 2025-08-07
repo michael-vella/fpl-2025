@@ -9,19 +9,22 @@ def load_tests(test_type: str = "all"):
     suite = unittest.TestSuite()
 
     start_dir = os.path.dirname(__file__)
+    unit_test_path = os.path.join(start_dir, "unit")
+    integration_test_path = os.path.join(start_dir, "integration")
+    pattern = "test_*.py"
 
     if test_type in ("u", "unit"):
-        suite.addTests(loader.discover(start_dir=start_dir, pattern="test_*_unit.py"))
+        suite.addTests(loader.discover(start_dir=unit_test_path, pattern=pattern))
     elif test_type in ("i", "integration"):
-        suite.addTests(loader.discover(start_dir=start_dir, pattern="test_*_integration.py"))
+        suite.addTests(loader.discover(start_dir=integration_test_path, pattern=pattern))
     else:
-        suite.addTests(loader.discover(start_dir=start_dir, pattern="test_*.py"))
+        suite.addTests(loader.discover(start_dir=start_dir, pattern=pattern))
 
     return suite
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run unittest tests")
+    parser = argparse.ArgumentParser(description="Run tests")
     parser.add_argument(
         "--type", "-t",
         help="Specify which tests to run: unit, integration, or leave empty for all",
