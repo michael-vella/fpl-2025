@@ -11,4 +11,5 @@ authors = [{ name = "Michael Vella", email = "michael.vella0110@gmail.com" }]
 dependencies = [
     "requests==2.32.4",
     "pydantic==2.11.7",
+    "polars==1.32.2",
 ]
