@@ -1,12 +1,31 @@
-from fpl.repositories import PlayerTypeRepository
-from fpl.services import PlayerTypeService
+import polars as pl
+
+from fpl.repositories import PlayerRepository
+from fpl.repositories import TeamRepository
+
 
 if __name__ == "__main__":
-    player_type_repo = PlayerTypeRepository()
-    player_type_service = PlayerTypeService(player_type_repo)
+    print("Running main program...")
 
-    player_types = player_type_repo.get_all()
-    print(f"Player Types: {player_types}")
+    player_repo = PlayerRepository()
+    player_list = player_repo.get_all()
+    player_df = pl.DataFrame(player_list)
 
-    def_id = player_type_service.get_id_by_name("def")
-    print(f"Defender ID: {def_id}")
+    team_repo = TeamRepository()
+    team_list = team_repo.get_all()
+    team_df = pl.DataFrame(team_list)
+    
+    print(f"Team schema: '{team_df.schema}'")
+    print(f"Player schema: '{player_df.schema}'")
+
+    joined_df = player_df.join(
+        team_df,
+        left_on="team",
+        right_on="id",
+        how="inner"
+    )
+
+    print(team_df)
+    print(player_df)
+
+    print(joined_df)
